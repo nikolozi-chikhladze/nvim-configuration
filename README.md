@@ -12,6 +12,9 @@
 - mason-lspconfig
 - lsp-zero
 
+# Formate
+- nvim-formatter
+
 # Kemaps
 - remap
 - set
