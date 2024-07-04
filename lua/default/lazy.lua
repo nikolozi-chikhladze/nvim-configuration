@@ -59,8 +59,30 @@ require("lazy").setup({
             {'hrsh7th/nvim-cmp'},
             {'L3MON4D3/LuaSnip'},
             --{'mhartington/formatter.nvim'},
-            {'jose-elias-alvarez/null-ls.nvim', dependencies = { 'nvim-lua/plenary.nvim' }},
+            --{'jose-elias-alvarez/null-ls.nvim', dependencies = { 'nvim-lua/plenary.nvim' }},
             --{'jay-babu/mason-null-ls', dependencies = { 'jose-elias-alvarez/null-ls.nvim', 'williamboman/mason-lspconfig.nvim' }},
+            {
+                'mhartington/formatter.nvim',
+                config = function()
+                    local formatter_prettier = { require('formatter.defaults.prettier') }
+                    require("formatter").setup({
+                        filetype = {
+                            javascript      = formatter_prettier,
+                            javascriptreact = formatter_prettier,
+                            typescript      = formatter_prettier,
+                            typescriptreact = formatter_prettier,
+                        }
+                    })
+                    -- automatically format buffer before writing to disk:
+                    vim.api.nvim_create_augroup('BufWritePreFormatter', {})
+                    vim.api.nvim_create_autocmd('BufWritePre', {
+                        command = 'FormatWrite',
+                        group = 'BufWritePreFormatter',
+                        pattern = { '*.js', '*.jsx', '*.ts', '*.tsx' },
+                    })
+                end,
+                ft = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
+            },
         },
     },
     -- Configure any other settings here. See the documentation for more details.
