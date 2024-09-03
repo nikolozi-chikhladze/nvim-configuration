@@ -156,6 +156,10 @@ require("lazy").setup({
                 })
 
             end},
+            {
+                'nvim-lualine/lualine.nvim',
+                dependencies = { 'nvim-tree/nvim-web-devicons' },
+                            },
             --{'mhartington/formatter.nvim'},
             --{'jose-elias-alvarez/null-ls.nvim', dependencies = { 'nvim-lua/plenary.nvim' }},
             --{'jay-babu/mason-null-ls', dependencies = { 'jose-elias-alvarez/null-ls.nvim', 'williamboman/mason-lspconfig.nvim' }},
