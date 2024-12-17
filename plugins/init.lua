@@ -1,0 +1,4 @@
+require('plugins.lazy')
+require('plugins.lsp')
+require('plugins.ui_theme')
+require('plugins.telescope')
