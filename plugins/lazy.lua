@@ -30,7 +30,11 @@ require("lazy").setup({
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 			"nvim-tree/nvim-web-devicons",
-			{ 'nvim-telescope/telescope-fzf-native.nvim', build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release' }
+			{
+				'nvim-telescope/telescope-fzf-native.nvim',
+				build =
+				'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release'
+			}
 		}
 	},
 	{
@@ -45,7 +49,12 @@ require("lazy").setup({
 					"luadoc",
 					"vim",
 					"lua",
-					"markdown"
+					"markdown",
+					"javascript",
+					"typescript",
+					"html",
+					"css",
+					"scss"
 				}
 			}
 		end,
@@ -53,4 +62,5 @@ require("lazy").setup({
 	{ "jose-elias-alvarez/null-ls.nvim" },
 	{ "lewis6991/gitsigns.nvim" },
 	{ "tpope/vim-fugitive" },
+	{ "folke/which-key.nvim" },
 })

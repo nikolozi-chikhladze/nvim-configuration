@@ -28,12 +28,35 @@ lspconfig.lua_ls.setup({
 				},
 			},
 		},
+		html = {
+			format = {
+				enable = false
+			},
+			prettier = {
+				enable = true,
+				path = vim.fn.expand("~/.local/share/nvim/mason/packages/prettier/bin/prettier")
+			}
+		},
+		css = {
+			format = {
+				enable = false
+			},
+			prettier = {
+				enable = true,
+				path = vim.fn.expand("~/.local/share/nvim/mason/packages/prettier/bin/prettier")
+			}
+		}
 	},
 })
 
 -- javascript/typescript setup
 lspconfig.ts_ls.setup({
 	filetypes = { "typescript", "typescriptreact", "javascript", "javascriptreact", "jsx", "tsx" },
+})
+
+-- html setup
+lspconfig.html.setup({
+	filetypes = { "html" },
 })
 
 -- null-ls setup for Prettier formatting

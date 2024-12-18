@@ -30,4 +30,3 @@ set_keymap('v', '<C-c>', '<Esc>', { noremap = true, silent = true })
 set_keymap('n', '<Leader>gv', ':G<CR>', { noremap = true, silent = true })
 set_keymap('n', '<Leader>gl', ':GcLog<CR>', { noremap = true, silent = true })
 set_keymap('n', '<Leader>gca', ':Git commit --amend<CR>', { noremap = true, silent = true })
-
