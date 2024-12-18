@@ -54,7 +54,7 @@ require("lazy").setup({
 					"typescript",
 					"html",
 					"css",
-					"scss"
+					"scss",
 				}
 			}
 		end,
@@ -63,4 +63,14 @@ require("lazy").setup({
 	{ "lewis6991/gitsigns.nvim" },
 	{ "tpope/vim-fugitive" },
 	{ "folke/which-key.nvim" },
+	{
+		"hrsh7th/nvim-cmp",
+		dependencies = {
+			'hrsh7th/cmp-nvim-lsp',
+			'hrsh7th/cmp-buffer',
+			'hrsh7th/cmp-path',
+			'hrsh7th/cmp-cmdline',
+			'L3MON4D3/LuaSnip',
+		}
+	},
 })
