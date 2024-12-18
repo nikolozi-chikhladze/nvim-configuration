@@ -45,7 +45,7 @@ lspconfig.lua_ls.setup({
 				enable = true,
 				path = vim.fn.expand("~/.local/share/nvim/mason/packages/prettier/bin/prettier")
 			}
-		}
+		},
 	},
 })
 
@@ -65,6 +65,9 @@ null_ls.setup({
 	sources = {
 		null_ls.builtins.formatting.prettier.with({
 			filetypes = { "typescript", "typescriptreact", "javascript", "javascriptreact", "json", "html", "css", "scss", "markdown" }, -- Add other filetypes if needed
+		}),
+		null_ls.builtins.formatting.beautysh.with({
+			extra_args = { "--indent", "2" }, -- Example to set indentation level
 		}),
 	},
 })
