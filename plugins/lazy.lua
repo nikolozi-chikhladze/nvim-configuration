@@ -49,5 +49,8 @@ require("lazy").setup({
 				}
 			}
 		end,
-	}
+	},
+	{ "jose-elias-alvarez/null-ls.nvim" },
+	{ "lewis6991/gitsigns.nvim" },
+	{ "tpope/vim-fugitive" },
 })

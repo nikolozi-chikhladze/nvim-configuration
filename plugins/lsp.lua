@@ -4,6 +4,8 @@ require('mason-lspconfig').setup({
 })
 
 local lspconfig = require('lspconfig')
+
+-- lua setup
 lspconfig.lua_ls.setup({
 	settings = {
 		Lua = {
@@ -27,4 +29,29 @@ lspconfig.lua_ls.setup({
 			},
 		},
 	},
+})
+
+-- javascript/typescript setup
+lspconfig.ts_ls.setup({
+	filetypes = { "typescript", "typescriptreact", "javascript", "javascriptreact", "jsx", "tsx" },
+})
+
+-- null-ls setup for Prettier formatting
+local null_ls = require("null-ls")
+null_ls.setup({
+	sources = {
+		null_ls.builtins.formatting.prettier.with({
+			filetypes = { "typescript", "typescriptreact", "javascript", "javascriptreact", "json", "html", "css", "scss", "markdown" }, -- Add other filetypes if needed
+		}),
+	},
+})
+
+-- eslint setup
+lspconfig.eslint.setup({
+	on_attach = function(client, bufnr)
+		-- Disable eslint formatting because we are using Prettier with null-ls
+		if client.server_capabilities.documentFormattingProvider then
+			client.server_capabilities.documentFormattingProvider = false
+		end
+	end,
 })
