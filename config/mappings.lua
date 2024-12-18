@@ -30,3 +30,17 @@ set_keymap('v', '<C-c>', '<Esc>', { noremap = true, silent = true })
 set_keymap('n', '<Leader>gv', ':G<CR>', { noremap = true, silent = true })
 set_keymap('n', '<Leader>gl', ':GcLog<CR>', { noremap = true, silent = true })
 set_keymap('n', '<Leader>gca', ':Git commit --amend<CR>', { noremap = true, silent = true })
+
+-- Managing tabs
+set_keymap('n', '<Leader>to', ':tabnew<CR>', { noremap = true, silent = true })
+set_keymap('n', '<Leader>tn', ':tabnext<CR>', { noremap = true, silent = true })
+set_keymap('n', '<Leader>tp', ':tabprevious<CR>', { noremap = true, silent = true })
+set_keymap('n', '<Leader>tc', ':tabclose<CR>', { noremap = true, silent = true })
+
+-- Jumping to tabs
+set_keymap('n', '<Leader>t1', ':tabn 1<CR>', { noremap = true, silent = true })
+set_keymap('n', '<Leader>t2', ':tabn 2<CR>', { noremap = true, silent = true })
+set_keymap('n', '<Leader>t3', ':tabn 3<CR>', { noremap = true, silent = true })
+set_keymap('n', '<Leader>t4', ':tabn 4<CR>', { noremap = true, silent = true })
+set_keymap('n', '<Leader>t5', ':tabn 5<CR>', { noremap = true, silent = true })
+set_keymap('n', '<Leader>t6', ':tabn 6<CR>', { noremap = true, silent = true })
