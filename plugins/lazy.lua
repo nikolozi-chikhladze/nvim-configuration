@@ -26,6 +26,10 @@ require("lazy").setup({
 		name = "rose-pine"
 	},
 	{
+		"catppuccin/nvim",
+		name = "catppuccin"
+	},
+	{
 		'nvim-telescope/telescope.nvim',
 		dependencies = {
 			"nvim-lua/plenary.nvim",
@@ -36,6 +40,10 @@ require("lazy").setup({
 				'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release'
 			}
 		}
+	},
+	{
+		"nvim-telescope/telescope-file-browser.nvim",
+		dependencies = { "nvim-lua/plenary.nvim", "nvim-tree/nvim-web-devicons" }
 	},
 	{
 		"nvim-treesitter/nvim-treesitter",
@@ -71,6 +79,19 @@ require("lazy").setup({
 			'hrsh7th/cmp-path',
 			'hrsh7th/cmp-cmdline',
 			'L3MON4D3/LuaSnip',
+			"prisma/vim-prisma",
 		}
+	},
+	{
+		'jose-elias-alvarez/nvim-lsp-ts-utils',
+		dependencies = { 'nvim-lua/plenary.nvim', 'neovim/nvim-lspconfig' }
+	},
+	{
+		"prisma/vim-prisma",
+		ft = "prisma", -- Load only for .prisma files
+	},
+	{
+		"nvim-tree/nvim-web-devicons",
+		opts = {}
 	},
 })

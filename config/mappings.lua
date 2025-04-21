@@ -36,6 +36,7 @@ set_keymap('n', '<Leader>to', ':tabnew<CR>', { noremap = true, silent = true })
 set_keymap('n', '<Leader>tn', ':tabnext<CR>', { noremap = true, silent = true })
 set_keymap('n', '<Leader>tp', ':tabprevious<CR>', { noremap = true, silent = true })
 set_keymap('n', '<Leader>tc', ':tabclose<CR>', { noremap = true, silent = true })
+set_keymap('n', '<Leader>tt', ':tab ter<CR>', { noremap = true, silent = true })
 
 -- Jumping to tabs
 set_keymap('n', '<Leader>t1', ':tabn 1<CR>', { noremap = true, silent = true })
@@ -44,3 +45,8 @@ set_keymap('n', '<Leader>t3', ':tabn 3<CR>', { noremap = true, silent = true })
 set_keymap('n', '<Leader>t4', ':tabn 4<CR>', { noremap = true, silent = true })
 set_keymap('n', '<Leader>t5', ':tabn 5<CR>', { noremap = true, silent = true })
 set_keymap('n', '<Leader>t6', ':tabn 6<CR>', { noremap = true, silent = true })
+
+-- Terminal mode to normal
+-- <Esc> <C-\><C-n>
+set_keymap('t', '<Esc>', "<C-\\><C-n>", { noremap = true, silent = true })
+

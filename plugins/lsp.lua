@@ -1,103 +1,87 @@
-require('mason').setup()
-require('mason-lspconfig').setup({
-	ensure_installed = { "lua_ls" }
-})
-
-local lspconfig = require('lspconfig')
-
--- lua setup
-lspconfig.lua_ls.setup({
-	settings = {
-		Lua = {
-			diagnostics = {
-				globals = { "vim" }
-
-			},
-			runtime = {
-				version = "LuaJIT",
-			},
-			format = {
-				enable = true,
-				defaultConfig = {
-					indent_style = "space",
-					indent_size = 2,
-				},
-				stylua = {
-					enable = true,
-					path = vim.fn.expand("~/.local/share/nvim/mason/packages/stylua/bin/stylua")
-				},
-			},
-		},
-		html = {
-			format = {
-				enable = false
-			},
-			prettier = {
-				enable = true,
-				path = vim.fn.expand("~/.local/share/nvim/mason/packages/prettier/bin/prettier")
-			}
-		},
-		css = {
-			format = {
-				enable = false
-			},
-			prettier = {
-				enable = true,
-				path = vim.fn.expand("~/.local/share/nvim/mason/packages/prettier/bin/prettier")
-			}
-		},
-	},
-})
-
--- javascript/typescript setup
-lspconfig.ts_ls.setup({
-	filetypes = { "typescript", "typescriptreact", "javascript", "javascriptreact", "jsx", "tsx" },
-})
-
--- html setup
-lspconfig.html.setup({
-	filetypes = { "html" },
-})
-
--- null-ls setup for Prettier formatting
+local mason = require("mason")
+local mason_lspconfig = require("mason-lspconfig")
+local lspconfig = require("lspconfig")
 local null_ls = require("null-ls")
-null_ls.setup({
-	sources = {
-		null_ls.builtins.formatting.prettier.with({
-			filetypes = { "typescript", "typescriptreact", "javascript", "javascriptreact", "json", "html", "css", "scss", "markdown" }, -- Add other filetypes if needed
-		}),
-		null_ls.builtins.formatting.beautysh.with({
-			extra_args = { "--indent", "2" }, -- Example to set indentation level
-		}),
-	},
+local ts_utils = require("nvim-lsp-ts-utils")
+local cmp = require("cmp")
+
+-- Mason setup
+mason.setup()
+mason_lspconfig.setup({
+    ensure_installed = { "lua_ls", "ts_ls", "html", "cssls", "eslint", "prismals" },
 })
 
--- eslint setup
+-- Shared on_attach
+local function on_attach(client, bufnr)
+    local opts = { noremap = true, silent = true, buffer = bufnr }
+    vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+    vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+    vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+    vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
+    vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
+end
+
+-- Capabilities
+local capabilities = require("cmp_nvim_lsp").default_capabilities()
+
+-- LSP Configurations
+lspconfig.lua_ls.setup({
+    capabilities = capabilities,
+    on_attach = on_attach,
+    settings = {
+        Lua = {
+            diagnostics = { globals = { "vim" } },
+            runtime = { version = "LuaJIT" },
+            format = { enable = true },
+        },
+    },
+})
+
+lspconfig.ts_ls.setup({
+    capabilities = capabilities,
+    on_attach = function(client, bufnr)
+        on_attach(client, bufnr)
+        ts_utils.setup({ enable_import_on_completion = true })
+        ts_utils.setup_client(client)
+    end,
+})
+
+lspconfig.html.setup({ capabilities = capabilities, on_attach = on_attach })
+
+lspconfig.cssls.setup({ capabilities = capabilities, on_attach = on_attach })
+
 lspconfig.eslint.setup({
-	on_attach = function(client, bufnr)
-		-- Disable eslint formatting because we are using Prettier with null-ls
-		if client.server_capabilities.documentFormattingProvider then
-			client.server_capabilities.documentFormattingProvider = false
-		end
-	end,
+    capabilities = capabilities,
+    on_attach = function(client)
+        client.server_capabilities.documentFormattingProvider = false
+        on_attach(client)
+    end,
 })
 
-local cmp = require('cmp')
+null_ls.setup({
+    sources = {
+        null_ls.builtins.formatting.prettier,
+        null_ls.builtins.diagnostics.eslint,
+    },
+    on_attach = on_attach,
+})
+
+-- nvim-cmp Setup
 cmp.setup({
-	snippet = {
-		expand = function(args)
-			require 'luasnip'.lsp_expand(args.body) -- Snippet expansion (optional)
-		end,
-	},
-	mapping = {
-		['<C-Space>'] = cmp.mapping.complete(),
-		['<CR>'] = cmp.mapping.confirm({ select = true }),
-		['<Tab>'] = cmp.mapping.select_next_item(),
-		['<S-Tab>'] = cmp.mapping.select_prev_item(),
-	},
-	sources = cmp.config.sources({
-		{ name = 'nvim_lsp' },
-		{ name = 'buffer' },
-		{ name = 'path' },
-	}),
+    snippet = {
+        expand = function(args)
+            require("luasnip").lsp_expand(args.body)
+        end,
+    },
+    mapping = cmp.mapping.preset.insert({
+        ["<C-Space>"] = cmp.mapping.complete(),
+        ["<CR>"] = cmp.mapping.confirm({ select = true }),
+        ["<Tab>"] = cmp.mapping.select_next_item(),
+        ["<S-Tab>"] = cmp.mapping.select_prev_item(),
+    }),
+    sources = cmp.config.sources({
+        { name = "nvim_lsp" },
+        { name = "buffer" },
+        { name = "path" },
+    }),
 })
